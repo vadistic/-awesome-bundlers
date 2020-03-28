@@ -1,0 +1,76 @@
+{
+  "list": [
+    {
+      "full_name": "webpack/webpack",
+      "npm_name": "webpack",
+      "sample_name": "",
+      "homepage": "https://webpack.js.org"
+    },
+    {
+      "full_name": "rollup/rollup",
+      "npm_name": "rollup",
+      "sample_name": "",
+      "homepage": "https://rollupjs.org"
+    },
+    {
+      "full_name": "parcel-bundler/parcel",
+      "npm_name": "parcel-bundler",
+      "sample_name": "parcel",
+      "homepage": "https://parceljs.org"
+    },
+    {
+      "full_name": "fastpack/fastpack",
+      "npm_name": "fastpack",
+      "sample_name": "",
+      "homepage": "https://fastpack.sh"
+    },
+    {
+      "full_name": "egoist/poi",
+      "npm_name": "poi",
+      "sample_name": "poi",
+      "homepage": "https://poi.js.org"
+    },
+    {
+      "full_name": "egoist/bili",
+      "npm_name": "bili",
+      "sample_name": "",
+      "homepage": "https://bili.egoist.sh"
+    },
+    {
+      "full_name": "evanw/esbuild",
+      "npm_name": "esbuild-linux-64",
+      "sample_name": "",
+      "homepage": ""
+    },
+    {
+      "full_name": "packem/packem",
+      "npm_name": "packem",
+      "sample_name": "",
+      "homepage": "https://packem.github.io"
+    },
+    {
+      "full_name": "zeit/ncc",
+      "npm_name": "@zeit/ncc",
+      "sample_name": "",
+      "homepage": ""
+    },
+    {
+      "full_name": "facebook/metro",
+      "npm_name": "metro",
+      "sample_name": "",
+      "homepage": "https://facebook.github.io/metro"
+    },
+    {
+      "full_name": "vimlet/bundl",
+      "npm_name": "@vimlet/bundl",
+      "sample_name": "",
+      "homepage": "https://bundljs.org"
+    },
+    {
+      "full_name": "osdevisnot/klap",
+      "npm_name": "klap",
+      "sample_name": "",
+      "homepage": ""
+    }
+  ]
+}

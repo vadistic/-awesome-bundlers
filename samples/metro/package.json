@@ -1,5 +1,5 @@
 {
-  "name": "@bundlers/cra",
+  "name": "@bundlers/metro",
   "version": "0.1.0",
   "private": true,
   "description": "x",
@@ -10,39 +10,30 @@
   "license": "MIT",
   "author": "Jakub Wadas <vadistic@gmail.com>",
   "scripts": {
-    "build": "react-scripts build",
-    "clean": "rm -rf dist",
-    "dev": "react-scripts start",
+    "clean": "rm -rf dist build",
     "format": "prettier --write 'src/**/*.{ts,tsx}'",
     "lint:fix": "eslint '*/**/*.{ts,tsx}' --fix",
     "lint": "eslint '*/**/*.{ts,tsx}'",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test:cov": "react-scripts test --coverage",
-    "test:watch": "react-scripts test --watch",
-    "test": "react-scripts test"
-  },
-  "browserslist": {
-    "production": [
-      ">0.75%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "dev": "time node dev.js",
+    "build": "time node build.js"
   },
   "dependencies": {
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react": "16.13.1",
+    "react-dom": "16.13.1"
   },
   "devDependencies": {
-    "@types/jest": "^25.1.4",
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/preset-react": "^7.6.3",
+    "@babel/preset-typescript": "^7.9.0",
     "@types/node": "^13.9.5",
     "@types/react": "^16.9.26",
     "@types/react-dom": "^16.9.5",
-    "react-scripts": "^3.4.1",
+    "metro": "^0.56.0",
+    "metro-core": "^0.56.0",
+    "react-native": "^0.62.0",
+    "react-native-typescript-transformer": "^1.2.13",
     "typescript": "^3.8.3"
   }
 }

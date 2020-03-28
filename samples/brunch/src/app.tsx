@@ -1,10 +1,11 @@
 import React from 'react'
-import './App.css'
+import './app.css'
 
 const App: React.FC = () => {
   return (
     <div className="App">
       <header className="App-header">
+        <h1>Poi...</h1>
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>

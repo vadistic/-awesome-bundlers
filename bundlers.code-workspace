@@ -1,0 +1,29 @@
+{
+  "folders": [
+    {
+      "path": "."
+    },
+    {
+      "path": "samples/template"
+    },
+    {
+      "path": "samples/brunch"
+    },
+    {
+      "path": "samples/cra"
+    },
+    {
+      "path": "samples/metro"
+    },
+    {
+      "path": "samples/parcel"
+    },
+    {
+      "path": "samples/pax"
+    },
+    {
+      "path": "samples/poi"
+    }
+  ],
+  "settings": {}
+}
