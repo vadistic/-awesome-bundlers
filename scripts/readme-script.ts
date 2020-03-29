@@ -94,10 +94,10 @@ const main = async () => {
       stars: 'Stars',
       forks: 'Forks',
       issues: 'Issues',
-      subs: 'Subs',
+      watchers: 'Watchers',
       sample: 'Sample',
       description: 'Description',
-      badges: 'Random Badges',
+      badges: 'Badges',
     },
     {
       name: ({ name, html_url, homepage }) => {
@@ -111,10 +111,10 @@ const main = async () => {
 
         return res
       },
-      stars: (p) => `🌟 [**${p.stargazers_count}**](${p.stargazers_url})`,
-      forks: (p) => `🍴 [**${p.forks_count}**](${p.forks_url})`,
-      issues: (p) => `🚨 [**${p.open_issues_count}**](${p.issues_url})`,
-      subs: (p) => `👀 *${p.subscribers_count}*`,
+      stars: (p) => `🌟[${p.stargazers_count}](${p.html_url}/stargazers)`,
+      forks: (p) => `🍴[${p.forks_count}](${p.html_url}/network/members)`,
+      issues: (p) => `🚨[${p.open_issues_count}](${p.html_url}/issues)`,
+      watchers: (p) => `👀[${p.subscribers_count}](${p.html_url}/watchers)`,
       sample: (p) =>
         p.sample_name ? `[samples/${p.sample_name}](./samples/${p.sample_name})` : '*TODO*',
       description: ({ description }) => '*' + description + '*',

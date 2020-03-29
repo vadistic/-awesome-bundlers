@@ -71,6 +71,12 @@
       "npm_name": "klap",
       "sample_name": "",
       "homepage": ""
+    },
+    {
+      "full_name": "brunch/brunch",
+      "npm_name": "brunch",
+      "sample_name": "",
+      "homepage": "https://brunch.io/"
     }
   ]
 }
