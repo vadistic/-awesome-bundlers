@@ -4,9 +4,17 @@
 
 ## Overviews
 
-- [scripted readme]('./scripts/readme-script.ts')
-- [sample projects]('./samples/')
-- [shields.io abuse]('https://shields.io')
+_Awesome bundlers (said no one ever...)_
+
+Anyways, I'm pushing the list I've just made while searching for some bundler setup that I would not mislike.
+
+Btw. If you're just starting to go into this rabbit hole - you may not need bundler! (cool read: [In 2020, go bundler-free](https://medium.com/@dmnsgn/in-2020-go-bundler-free-eb29c1f05fc9), tools: [#bundle-less]('/#bundle-less'))
+
+**What's here:**
+
+- readme generator^^
+- few sample projects
+- shields.io badges abuse
 
 ## Projects
 
@@ -32,7 +40,27 @@
 
 ## Other Stuff
 
-### Google Clojure Compiler
+### Bundle-less
+
+#### snowpack
+
+> Build web applications with less tooling and 10x faster iteration. No bundler required.
+
+https://github.com/pikapkg/snowpack
+
+https://www.snowpack.dev/
+
+#### hq
+
+> Lightning fast, zero configuration, web application development server
+
+https://github.com/hqjs/hq
+
+https://hqjs.org
+
+### Compilers
+
+#### Google Clojure Compiler
 
 > A JavaScript checker and optimizer.
 
@@ -40,15 +68,7 @@ https://github.com/google/closure-compiler
 
 https://github.com/ampproject/rollup-plugin-closure-compiler
 
-## NX
-
-> Extensible Dev Tools for Monorepos
-
-https://romejs.dev/
-
-https://github.com/nrwl/nx
-
-### Facebook Rome
+#### Facebook Rome
 
 > An experimental JavaScript toolchain
 
@@ -56,7 +76,17 @@ https://romejs.dev/
 
 https://github.com/facebookexperimental/rome
 
-### OpenWC Build systems
+### Build toolsets
+
+#### NX
+
+> Extensible Dev Tools for Monorepos
+
+https://romejs.dev/
+
+https://github.com/nrwl/nx
+
+#### OpenWC Build systems
 
 > Open Web Components: guides, tools and libraries for modern web development and web components
 
@@ -70,4 +100,9 @@ https://github.com/open-wc/open-wc
 
 [2020 JavaScript bundlers review](https://dev.to/talentlessguy/2020-javascript-bundlers-review-3ce)
 
-[https://medium.com/@dmnsgn/in-2020-go-bundler-free-eb29c1f05fc9](https://medium.com/@dmnsgn/in-2020-go-bundler-free-eb29c1f05fc9)
+## Editing
+
+- Do not edit `readme.md`
+- Edit stuff in `./data`
+- To update run `gen:readme`
+- To fetch fresh data add `.env` with `TOKEN=GITHUB_TOKEN` and run `gen:clean`
