@@ -1,4 +1,4 @@
-# bundlers
+# awesome-bundlers
 
 > Researching JS/TS bundler tooling
 
