@@ -5,16 +5,21 @@ import path from 'path'
 import { Octokit } from '@octokit/rest'
 import dotenv from 'dotenv'
 import fs from 'fs-extra'
-import { list } from './bundler-list.json'
+import { list } from '../data/bundler-list.json'
 
 dotenv.config()
 
-const DATA_PATH = './data.json'
-const README_PREFACE_PATH = './README_PREFACE.md'
-const README_POSTFACE_PATH = './README_POSTFACE.md'
+const DATA_PATH = './data/res.json'
+const README_PREFACE_PATH = './data/README_PREFACE.md'
+const README_POSTFACE_PATH = './data/README_POSTFACE.md'
 const TOKEN = process.env.TOKEN
 
 const abs = (rel: string) => path.join(process.cwd(), rel)
+type Row = Octokit.ReposGetResponse & typeof list[number]
+type DataFile = {
+  data: Row[]
+  timestamp: string
+}
 
 const printJsonTable = <T, H>(
   headers: { [K in keyof H]: string },
@@ -53,37 +58,46 @@ const fetchData = async () => {
     const [owner, repo] = item.full_name.split('/')
 
     const { data } = await octokit.repos.get({ owner, repo })
+
     return {
       ...item,
       ...data,
     }
   })
 
-  return Promise.all(rowsP)
-}
+  const data = await Promise.all(rowsP)
 
-type Row = Octokit.ReposGetResponse & typeof list[number]
+  return {
+    timestamp: new Date().toJSON(),
+    data,
+  }
+}
 
 const main = async () => {
   const hasCachedData = fs.existsSync(abs(DATA_PATH))
 
-  const dataFile: { data: Row[] } = hasCachedData
+  const dataFile: DataFile = hasCachedData
     ? fs.readJSONSync(abs(DATA_PATH), { encoding: 'utf8' })
-    : { data: await fetchData() }
+    : await fetchData()
 
   if (!hasCachedData) {
     await fs.writeJSON(abs(DATA_PATH), dataFile, { spaces: 2, encoding: 'utf8' })
   }
 
-  const { data } = dataFile
+  const { data, timestamp } = dataFile
+
+  const sortedData = data.sort((a, b) => (a.stargazers_count < b.stargazers_count ? 1 : -1))
 
   const table = printJsonTable(
     {
       name: 'Name',
-      github: 'Stars',
-      npm: 'Open Issues',
+      stars: 'Stars',
+      forks: 'Forks',
+      issues: 'Issues',
+      subs: 'Subs',
       sample: 'Sample',
       description: 'Description',
+      badges: 'Random Badges',
     },
     {
       name: ({ name, html_url, homepage }) => {
@@ -91,73 +105,63 @@ const main = async () => {
 
         res += ' ('
         if (html_url) res += `[*github*](${html_url})`
-        if (html_url && homepage) res += ' / '
+        if (html_url && homepage) res += '&'
         if (homepage) res += `[*web*](${homepage})`
         res += ')'
 
         return res
       },
-      github: ({ full_name, stargazers_url, commits_url }) => {
+      stars: (p) => `🌟 [**${p.stargazers_count}**](${p.stargazers_url})`,
+      forks: (p) => `🍴 [**${p.forks_count}**](${p.forks_url})`,
+      issues: (p) => `🚨 [**${p.open_issues_count}**](${p.issues_url})`,
+      subs: (p) => `👀 *${p.subscribers_count}*`,
+      sample: (p) =>
+        p.sample_name ? `[samples/${p.sample_name}](./samples/${p.sample_name})` : '*TODO*',
+      description: ({ description }) => '*' + description + '*',
+      badges: (p) => {
         let res = ''
-
-        res +=
-          `[![GitHub stars]` +
-          `(https://img.shields.io/github/stars/${full_name}?style=social)]` +
-          `('${stargazers_url}')`
-
-        res +=
-          `[![GitHub issues]` +
-          `(https://img.shields.io/github/issues/${full_name}?style=social)]` +
-          `('${commits_url}')`
-
-        res +=
-          `[![GitHub PRs]` +
-          `(https://img.shields.io/github/issues-pr/${full_name}?style=social)]` +
-          `('${commits_url}')`
-
-        res +=
-          `[![GitHub commits]` +
-          `(https://img.shields.io/github/commit-activity/m/${full_name}?style=social)]` +
-          `('${commits_url}')`
-
-        return res
-      },
-      npm: ({ npm_name }) => {
-        let res = ''
-
-        res +=
-          `[![NPM downloads]` +
-          `(https://img.shields.io/npm/dw/${npm_name}.svg)]` +
-          `('https://www.npmjs.com/${npm_name}')`
 
         res +=
           `[![NPM version]` +
-          `(https://img.shields.io/npm/v/${npm_name}.svg)]` +
-          `('https://www.npmjs.com/${npm_name}')`
+          `(https://img.shields.io/npm/v/${p.npm_name}.svg)]` +
+          `('https://www.npmjs.com/${p.npm_name}')`
+
+        res +=
+          `[![NPM downloads]` +
+          `(https://img.shields.io/npm/dw/${p.npm_name}.svg)]` +
+          `('https://www.npmjs.com/${p.npm_name}')`
 
         res +=
           `[![NPM Dependents]` +
-          `(https://img.shields.io/librariesio/dependents/npm/${npm_name})]` +
-          `('https://www.npmjs.com/${npm_name}')`
+          `(https://img.shields.io/librariesio/dependents/npm/${p.npm_name})]` +
+          `('https://www.npmjs.com/${p.npm_name}')`
 
         res +=
           `[![NPM Repos]` +
-          `(https://img.shields.io/librariesio/dependent-repos/npm/${npm_name})]` +
-          `('https://www.npmjs.com/${npm_name}')`
+          `(https://img.shields.io/librariesio/dependent-repos/npm/${p.npm_name})]` +
+          `('https://www.npmjs.com/${p.npm_name}')`
+
+        res +=
+          `[![GitHub PRs]` +
+          `(https://img.shields.io/github/issues-pr/${p.full_name}?style=social)]` +
+          `('${p.html_url}') `
+
+        res +=
+          `[![GitHub commits]` +
+          `(https://img.shields.io/github/commit-activity/m/${p.full_name}?style=social)]` +
+          `('${p.html_url}') `
 
         return res
       },
-      sample: ({ sample_name }) =>
-        sample_name ? `[SAMPLES/${sample_name}](./samples/${sample_name})` : '*TODO*',
-      description: ({ description }) => '*' + description + '*',
     },
-    data,
+    sortedData,
   )
 
   const preface = await fs.readFile(abs(README_PREFACE_PATH), 'utf8')
+  const when = `*Dataset generated: ${new Date(timestamp).toDateString()}*`
   const postface = await fs.readFile(abs(README_POSTFACE_PATH), 'utf8')
 
-  const readme = preface + '\n\n' + table + '\n\n' + postface
+  const readme = preface + '\n\n' + when + '\n\n' + table + '\n\n' + postface
 
   await fs.writeFile(abs('README.md'), readme)
 }
